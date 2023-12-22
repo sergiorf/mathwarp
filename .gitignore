@@ -1,0 +1,7 @@
+build/
+*.pyc
+.vscode
+CMakeUserPresets.json
+conanbuildinfo.cmake
+conaninfo.txt
+.conan/
