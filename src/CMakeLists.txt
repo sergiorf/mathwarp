@@ -1,8 +1,3 @@
-# MIT License 
-# Copyright (c) 2018-Today Michele Adduci <adduci@tutanota.com>
-#
-# Project-related instructions
-
 # Activate Testing, if given
 if(BUILD_TESTING)
   enable_testing()
@@ -11,15 +6,15 @@ endif()
 #####################################
 # Define Targets
 #####################################
-add_subdirectory(hellolib)
-add_subdirectory(mathwarp)
+add_subdirectory(mathwarp-core)
+add_subdirectory(mathwarp-repl)
 
 #####################################
 # Define Install Targets
 #####################################
 install(TARGETS
-  hellolib
-  mathwarp
+  mathwarp-core
+  mathwarp-repl
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
@@ -28,10 +23,10 @@ install(TARGETS
 
 install(
   FILES 
-    ${CMAKE_SOURCE_DIR}/project/hellolib/include/hellolib.h 
-    ${CMAKE_BINARY_DIR}/exports/hellolib_export.h
+    ${CMAKE_SOURCE_DIR}/project/mathwarp-core/include/evaluation.h 
+    ${CMAKE_BINARY_DIR}/exports/mathwarp-core_export.h
   DESTINATION 
-    include/hellolib)
+    include/mathwarp-core)
 
 install(FILES  
   ${CMAKE_SOURCE_DIR}/LICENSE

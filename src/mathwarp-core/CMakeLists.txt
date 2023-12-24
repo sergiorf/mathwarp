@@ -1,27 +1,31 @@
-# MIT License 
-# Copyright (c) 2018-Today Michele Adduci <adduci@tutanota.com>
-#
-# hellolib target instructions
-
 #####################################
 # Define Target Information
 #####################################
-set(TARGET_NAME hellolib)
+set(TARGET_NAME mathwarp-core)
 set(TARGET_INCLUDE_FOLDER ${CMAKE_CURRENT_SOURCE_DIR}/include)
-set(TARGET_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/hellolib.cpp)
+set(TARGET_SOURCES 
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/evaluation.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/parser.cpp
+)
+set(TARGET_HEADERS 
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/evaluation.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/parser.h
+)
+
+set(TARGET_FILES ${TARGET_SOURCES} ${TARGET_HEADERS})
 
 #####################################
 # Support IDE Visualization
 #####################################
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TARGET_SOURCES})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TARGET_FILES})
 
 #####################################
 # Define Target according to options
 #####################################
 if(BUILD_SHARED_LIBS)
-  add_library(${TARGET_NAME} SHARED ${TARGET_SOURCES})
+  add_library(${TARGET_NAME} SHARED ${TARGET_FILES})
 else()
-  add_library(${TARGET_NAME} STATIC ${TARGET_SOURCES})
+  add_library(${TARGET_NAME} STATIC ${TARGET_FILES})
 endif()
 
 #####################################
@@ -51,8 +55,9 @@ target_link_options(${TARGET_NAME} PRIVATE ${linker_flags})
 target_include_directories(${TARGET_NAME}
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/exports>
-  PRIVATE 
+    $<INSTALL_INTERFACE:include>
     ${TARGET_INCLUDE_FOLDER}
+  PRIVATE
     # include OpenSSL directories if present
     $<$<BOOL:${OPENSSL_FOUND}>:${OPENSSL_INCLUDE_DIR}>
     # Any other extra include required
@@ -78,7 +83,7 @@ if(BUILD_TESTING)
 
   endif()
   list(APPEND TEST_CASES
-    hellolib_test
+#    hellolib_test
   )
   foreach(TEST_CASE ${TEST_CASES})
     add_executable(${TEST_CASE} ${CMAKE_CURRENT_SOURCE_DIR}/test/${TEST_CASE}.cpp)

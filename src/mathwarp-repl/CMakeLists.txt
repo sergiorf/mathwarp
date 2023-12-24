@@ -1,9 +1,9 @@
 #####################################
 # Define Target Information
 #####################################
-set(TARGET_NAME mathwarp)
+set(TARGET_NAME mathwarp-repl)
 set(TARGET_INCLUDE_FOLDER ${CMAKE_CURRENT_SOURCE_DIR}/include)
-set(TARGET_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/mathwarp.cpp)
+set(TARGET_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
 #####################################
 # Support IDE Visualization
@@ -36,9 +36,8 @@ target_include_directories(${TARGET_NAME}
   PUBLIC
     $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/exports>
     ${TARGET_INCLUDE_FOLDER}
-    ${CMAKE_CURRENT_SOURCE_DIR}/../hellolib/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../mathwarp-core/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../thirdparty/include
 )
 
-# link against hellolib
-target_link_libraries(${TARGET_NAME} PUBLIC hellolib)
+target_link_libraries(${TARGET_NAME} PUBLIC mathwarp-core)
